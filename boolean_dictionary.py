@@ -6,6 +6,7 @@ model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # this is the 10k most common words from MIT 
 # leave it collapsed or put it in another file, it's massive
+#  would be better to use a whole dictionary, but that can come later 
 words = """
 a
 aa
