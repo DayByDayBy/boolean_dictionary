@@ -1,12 +1,12 @@
+import pandas as pd
 from sentence_transformers import SentenceTransformer
 from transformers import pipeline
 
-
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# this is the 10k most common words from MIT 
-# leave it collapsed or put it in another file, it's massive
-#  would be better to use a whole dictionary, but that can come later 
+# you might want to keep 'words' collapsed in vscode, 
+# as it makes scrolling the file easier 
+# (eventually i plan to use external larger dictionary)
 words = """
 a
 aa
@@ -10010,19 +10010,57 @@ zum
 zus
 """
 dictionary = list(filter(None, words.split("\n")))
+
 classifier = pipeline(
     "zero-shot-classification",
     model="facebook/bart-large-mnli"
 )
+
 candidate_labels = ['true', 'false']
-boolean_dict = [
-    {
-        "word": word, 
-        "label": classifier(word, candidate_labels)['labels'][0],
-        "score": classifier(word, candidate_labels)['scores'][0]
-    } for word in dictionary[:100]
-]
 
-print(boolean_dict)
+# ----------------------------------------------------------------
+# commented out because non-optimal - calls classifier twice:
+# 
+# boolean_dict = [
+#     {
+#         "Word": word,
+#         "Label": classifier(word, candidate_labels)['labels'][0],
+#         "Score": classifier(word, candidate_labels)['scores'][0]
+#     } for word in dictionary
+# ]
+# ----------------------------------------------------------------
 
-    
+
+# ----------------------------------------------------------------
+#  calls classifier once, but also seems wasetful, as the output i want is a DF:
+# 
+# boolean_dict = []
+# for word in dictionary:
+#     result = classifier(word, candidate_labels)
+#     label = result['labels'][0]
+#     score = result['scores'][0]
+#     boolean_dict.append({
+#         "Word": word,
+#         "Label": label,
+#         "Score": score
+#     })
+# ----------------------------------------------------------------
+
+# boolean_dict__df = pd.DataFrame(boolean_dict)
+
+
+boolean_dict_df = pd.DataFrame({
+    "Word": dictionary,
+    "Label": [classifier(word, candidate_labels)['labels'][0] for word in dictionary],
+    "Score": [classifier(word, candidate_labels)['scores'][0] for word in dictionary]
+})
+
+boolean_dict_df.to_csv('boolean_dictionary_10k.csv')
+
+
+#  whichever way you do it, this takes some time to run
+# 
+#  word list is 10k words, so that may be obvious, 
+#  but just in case you are cloning or 
+#  forking this and don't immediately 
+#  clock the sizes involved

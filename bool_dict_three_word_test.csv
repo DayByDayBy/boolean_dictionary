@@ -1,0 +1,4 @@
+Word,Label,True_Score,False_Score
+apple,false,"tensor(0.1679, device='mps:0')","tensor(0.2381, device='mps:0')"
+banana,false,"tensor(0.1490, device='mps:0')","tensor(0.1933, device='mps:0')"
+orange,false,"tensor(0.1322, device='mps:0')","tensor(0.2534, device='mps:0')"

@@ -22,6 +22,8 @@ word_bool_df = pd.DataFrame(word_bool_list, columns=['Word', 'Label', 'True_Scor
 
 print(word_bool_df)
 
+word_bool_df.to_csv('bool_dict_three_word_test.csv', index=False)
+
 
 
 
