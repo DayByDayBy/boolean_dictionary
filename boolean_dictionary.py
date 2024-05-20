@@ -10024,7 +10024,12 @@ boolean_dict = [
     } for word in dictionary[:100]
 ]
 
-print(boolean_dict)
+# print(boolean_dict)
+
+with open("boolean_dict_01.txt", "w") as f:
+    f.write(str(boolean_dict))
+
+
 
 # boolean_dict.to_csv('bool_dict_01.csv', index=False)
 
