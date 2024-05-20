@@ -10024,10 +10024,9 @@ boolean_dict = [
     } for word in dictionary[:100]
 ]
 
-# print(boolean_dict)
-boolean_dict_df = pd.DataFrame(boolean_dict, columns=['Word', 'Label', 'True_Score', 'False_Score'])
+print(boolean_dict)
 
-boolean_dict_df.to_csv('bool_dict_01.csv', index=False)
+# boolean_dict.to_csv('bool_dict_01.csv', index=False)
 
 
     
