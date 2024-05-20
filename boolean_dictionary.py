@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer
 from transformers import pipeline
+import pandas as pd
 
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -10023,6 +10024,10 @@ boolean_dict = [
     } for word in dictionary[:100]
 ]
 
-print(boolean_dict)
+# print(boolean_dict)
+boolean_dict_df = pd.DataFrame(boolean_dict, columns=['Word', 'Label', 'True_Score', 'False_Score'])
+
+boolean_dict_df.to_csv('bool_dict_01.csv', index=False)
+
 
     
